@@ -15,14 +15,14 @@ jobs:
       - name: sed * domain rule
         env:
           NO_SKIP: true
-          SED: sed 's/^\\*\.\\(.*\)/  - DOMAIN-SUFFIX, \\1/g' | sed '/#/d' | sed '1i\payload:'
+          SED: sed 's/^\\*\.\\(.*\)/- DOMAIN-SUFFIX, \\1/g' | sed '/#/d' | sed '1i\payload:'
         run: |
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.yaml
 
       - name: Move files to publish directory
         run: |
-          mkdir -p clash
-          cp *.yaml ./clash/
+          mkdir -p upload
+          cp *.yaml ./upload/
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v2.0.0
@@ -39,6 +39,6 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./clash/*
+            ./upload/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
