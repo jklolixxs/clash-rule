@@ -89,7 +89,7 @@ jobs:
           git config --global user.email "bavlzgbq@telegmail.com"
           git add -A
           git commit -m "Update YAML files"
-          git push origin HEAD:/clash-rule/clash-yaml/
+          git push origin HEAD:/refs/heads/clash-rule/clash-yaml/
 
       # - name: Upload artifact text
       #   uses: actions/upload-artifact@v3.1.2
