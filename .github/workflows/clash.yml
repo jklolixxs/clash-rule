@@ -27,7 +27,7 @@ jobs:
       - name: sed classical rule
         env:
           NO_SKIP: true
-          SED: grep DOMAIN | grep -v "#" | grep -v DOMAIN-KEYWORD | sed 's/  - DOMAIN,//g' | sed 's/  - DOMAIN-SUFFIX,/+./g' | sed 's/,/,\x27/g' | sed "s/$/'/" | sed "s/^/  - /"" | sed '1i payload:'
+          SED: grep DOMAIN | grep -v "#" | grep -v DOMAIN-KEYWORD | sed 's/  - DOMAIN,//g' | sed 's/  - DOMAIN-SUFFIX,/+./g' | sed 's/,/,\x27/g' | sed "s/$/'/" | sed "s/^/  - /" | sed '1ipayload:'
         run: |
           curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-surge.txt | ${{ env.SED }} >> anti-ad.yaml
 
@@ -35,7 +35,7 @@ jobs:
       - name: sed * rule
         env:
           NO_SKIP: true
-          SED: grep "*." | grep -v "#" | sed 's/\*\./\+\./g' | sed "s/^/'/;s/$/'/" | sed 's/^/  /' | sed '1i payload:'
+          SED: grep "*." | grep -v "#" | sed 's/\*\./\+\./g' | sed "s/^/'/;s/$/'/" | sed 's/^/  /' | sed '1ipayload:'
         run: |
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.yaml
           curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} >> 1host-lite.yaml
