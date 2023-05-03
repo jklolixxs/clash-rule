@@ -77,9 +77,6 @@ jobs:
           name: clash-yaml
           path: /home/runner/work/clash-yaml/*
 
-      - name: List files in clash-yaml directory
-        run: ls ./clash-yaml
-
       - name: Checkout repo
         uses: actions/checkout@v3.5.2
       
