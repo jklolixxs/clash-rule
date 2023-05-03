@@ -15,7 +15,7 @@ jobs:
       - name: sed * domain rule
         env:
           NO_SKIP: true
-          SED: sed -e '1i\payload:' -e 's/^\\*\.\\(.*\)/  - DOMAIN-SUFFIX, \\1/g' -e '/#/d'
+          SED: sed 's/^\\*\\.\\(.*\\)/ - DOMAIN-SUFFIX, \\1/g' | sed '/#/d' | sed '1i\payload:'
         run: |
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.yaml
 
