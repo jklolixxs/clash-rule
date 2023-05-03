@@ -1,0 +1,44 @@
+name: rule files
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 22 * * *"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**/README.md"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: sed * domain rule
+        env:
+          NO_SKIP: true
+          SED: sed 's/^\\*\.\\(.*\)/  - DOMAIN-SUFFIX, \\1/g' | sed '/^$/d' | sed '/#/d' | '1i\payload:'
+        run: |
+          curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.yaml
+
+      - name: Move files to publish directory
+        run: |
+          mkdir -p clash
+          cp *.txt ./clash/
+
+      - name: Delete current release assets
+        uses: andreaswilli/delete-release-assets-action@v2.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: clash_rule
+          deleteOnlyFromDrafts: false
+
+      - name: Release and upload assets
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: clash
+          tag_name: clash_rule
+          draft: false
+          prerelease: false
+          files: |
+            ./clash/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
