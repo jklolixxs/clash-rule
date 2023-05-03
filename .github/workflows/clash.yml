@@ -8,6 +8,7 @@ on:
       - main
     paths-ignore:
       - "**/README.md"
+      - "**/clash-rule/**"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -70,12 +71,15 @@ jobs:
       #     tag: clash_rule
       #     deleteOnlyFromDrafts: false
 
-      # - name: Upload artifact yaml
-      #   uses: actions/upload-artifact@v3.1.2
-      #   with:
-      #     name: clash-yaml
-      #     path: ./clash-yaml/*
-      
+      - name: Upload artifact yaml
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: clash-yaml
+          path: ./clash-yaml/*
+
+      - name: List files in clash-yaml directory
+        run: ls ./clash-yaml
+
       - name: Checkout repo
         uses: actions/checkout@v3.5.2
       
@@ -84,7 +88,7 @@ jobs:
           cd ./clash-yaml
           git add .
           git commit -m "Update YAML files"
-          git push
+          git push origin HEAD:/clash-yaml/
 
       # - name: Upload artifact text
       #   uses: actions/upload-artifact@v3.1.2
