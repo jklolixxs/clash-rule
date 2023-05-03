@@ -21,7 +21,8 @@ jobs:
           NO_SKIP: true
           SED: grep DOMAIN | grep -v "#" | grep -v DOMAIN-KEYWORD | sed 's/DOMAIN,//g' | sed 's/DOMAIN-SUFFIX,/+./g' | sed 's/,/,\x27/g' | sed "s/+/\x27+/g" | sed "s/$/'/" | sed "s/^/  - /" | sed '1ipayload:'
         run: |
-          curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-surge.txt | ${{ env.SED }} >> anti-ad.yaml
+          mkdir -p ./clash-yaml/
+          curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-surge.txt | ${{ env.SED }} > ./clash-yaml/anti-ad.yaml
 
       # 仅支持将 使用了通配符 * 的域名文件转换为behavior: domain
       - name: sed * rule
@@ -29,8 +30,8 @@ jobs:
           NO_SKIP: true
           SED: grep "*." | grep -v "#" | sed 's/\*\./\+\./g' | sed "s/^/'/;s/$/'/" | sed 's/^/  - /' | sed '1ipayload:'
         run: |
-          curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.yaml
-          curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} >> 1host-lite.yaml
+          curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} > ./clash-yaml/oisd-small.yaml
+          curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} > ./clash-yaml/1host-lite.yaml
 
       # 下面的规则是转换为 text 格式
 
@@ -40,9 +41,10 @@ jobs:
           NO_SKIP: true
           SED: grep DOMAIN | grep -v "#" | grep -v DOMAIN-KEYWORD | sed 's/  - DOMAIN,//g' | sed 's/  - DOMAIN-SUFFIX,/+./g'
         run: |
-          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Proxy/Proxy_Classical.yaml | ${{ env.SED }} >> proxy.txt
-          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml | ${{ env.SED }} >> china.txt
-          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml | ${{ env.SED }} >> globalmedia.txt
+          mkdir -p ./clash-text/
+          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Proxy/Proxy_Classical.yaml | ${{ env.SED }} > ./clash-text/proxy.txt
+          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml | ${{ env.SED }} > ./clash-text/china.txt
+          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml | ${{ env.SED }} > ./clash-text/globalmedia.txt
 
       # 仅支持将另类使用了 DOMAIN 或 DOMAIN-SUFFIX 的域名文件转换为behavior: domain format: text
       - name: sed other classical rule
@@ -50,7 +52,7 @@ jobs:
           NO_SKIP: true
           SED: grep DOMAIN | grep -v "#" | sed 's/DOMAIN,//g' | sed 's/DOMAIN-SUFFIX,/+./g'
         run: |
-          curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-surge.txt | ${{ env.SED }} >> anti-ad.txt
+          curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-surge.txt | ${{ env.SED }} > ./clash-text/anti-ad.txt
 
       # 仅支持将 使用了通配符 * 的域名文件转换为behavior: domain format: text
       - name: sed * rule
@@ -58,15 +60,15 @@ jobs:
           NO_SKIP: true
           SED: grep "*." | grep -v "#" | sed 's/\*\./\+\./g'
         run: |
-          curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.txt
-          curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} >> 1host-lite.txt
+          curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} > ./clash-text/oisd-small.txt
+          curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} > ./clash-text/1host-lite.txt
 
-      - name: Move files to publish directory
-        run: |
-          mkdir -p clash-yaml
-          mkdir -p clash-text
-          cp *.yaml ./clash-yaml/
-          cp *.yaml ./clash-text/
+      # - name: Move files to publish directory
+      #   run: |
+      #     mkdir -p clash-yaml
+      #     mkdir -p clash-text
+      #     cp *.yaml ./clash-yaml/
+      #     cp *.yaml ./clash-text/
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v2.0.0
