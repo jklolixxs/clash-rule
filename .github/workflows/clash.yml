@@ -83,13 +83,13 @@ jobs:
       - name: Push files to repo
         run: |
           cd /home/runner/work/clash-yaml
+          git config --global init.defaultBranch main
           git init
           git config --global user.name "jklolixxs"
           git config --global user.email "bavlzgbq@telegmail.com"
-          git checkout -b release
-          git add .
+          git add -A
           git commit -m "Update YAML files"
-          git push origin release:/clash-rule/clash-yaml/
+          git push origin main:/clash-rule/clash-yaml/
 
       # - name: Upload artifact text
       #   uses: actions/upload-artifact@v3.1.2
