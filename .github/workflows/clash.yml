@@ -21,7 +21,6 @@ jobs:
           curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Proxy/Proxy_Classical.yaml | ${{ env.SED }} >> proxy.yaml
           curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml | ${{ env.SED }} >> china.yaml
           curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml | ${{ env.SED }} >> globalmedia.yaml
-          curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-surge.txt | ${{ env.SED }} >> anti-ad.yaml
 
       # 仅支持将另类使用了 DOMAIN 或 DOMAIN-SUFFIX 的域名文件转换为behavior: domain
       - name: sed classical rule
@@ -40,12 +39,12 @@ jobs:
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.yaml
           curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} >> 1host-lite.yaml
 
-      - name: sed payload clash domain rule
-        env:
-          NO_SKIP: true
-          SED: sed 's/payload:/ /g' | sed 's/ - / /g' | sed "s/'/ /g" | sed 's/ //g'
-        run: |
-          curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-clash.yaml | ${{ env.SED }} >> anit-ad.txt
+      # - name: sed payload clash domain rule
+      #   env:
+      #     NO_SKIP: true
+      #     SED: sed 's/payload:/ /g' | sed 's/ - / /g' | sed "s/'/ /g" | sed 's/ //g'
+      #   run: |
+      #     curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-clash.yaml | ${{ env.SED }} >> anit-ad.txt
 
       - name: Move files to publish directory
         run: |
