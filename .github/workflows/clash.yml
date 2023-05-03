@@ -24,7 +24,7 @@ jobs:
       - name: sed * rule
         env:
           NO_SKIP: true
-          SED: grep "*." | grep -v "#" | sed 's/\*\./\+\./g' | sed 's/^/  /' | sed '1ipayload:'
+          SED: grep "*." | grep -v "#" | sed 's/\*\./\+\./g' | sed 's/^/  /' | sed "s/^/'/;s/$/'/" | sed '1ipayload:'
         run: |
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.txt
           curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} >> 1host-lite.txt
