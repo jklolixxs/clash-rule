@@ -12,18 +12,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 仅支持将 behavior: classical 转换为behavior: domain
-      - name: sed classical rule
-        env:
-          NO_SKIP: true
-          SED: grep DOMAIN | grep -v "#" | grep -v DOMAIN-KEYWORD | sed 's/  - DOMAIN,//g' | sed 's/  - DOMAIN-SUFFIX,/+./g'
-        run: |
-          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Proxy/Proxy_Classical.yaml | ${{ env.SED }} >> proxy.yaml
-          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml | ${{ env.SED }} >> china.yaml
-          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml | ${{ env.SED }} >> globalmedia.yaml
+
+      # 下面的规则是转换为 yaml 格式
 
       # 仅支持将另类使用了 DOMAIN 或 DOMAIN-SUFFIX 的域名文件转换为behavior: domain
-      - name: sed classical rule
+      - name: sed other classical rule
         env:
           NO_SKIP: true
           SED: grep DOMAIN | grep -v "#" | grep -v DOMAIN-KEYWORD | sed 's/DOMAIN,//g' | sed 's/DOMAIN-SUFFIX,/+./g' | sed 's/,/,\x27/g' | sed "s/+/\x27+/g" | sed "s/$/'/" | sed "s/^/  - /" | sed '1ipayload:'
@@ -39,17 +32,41 @@ jobs:
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.yaml
           curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} >> 1host-lite.yaml
 
-      # - name: sed payload clash domain rule
-      #   env:
-      #     NO_SKIP: true
-      #     SED: sed 's/payload:/ /g' | sed 's/ - / /g' | sed "s/'/ /g" | sed 's/ //g'
-      #   run: |
-      #     curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-clash.yaml | ${{ env.SED }} >> anit-ad.txt
+      # 下面的规则是转换为 text 格式
+
+      # 仅支持将 behavior: classical 转换为behavior: domain format: text
+      - name: sed classical rule
+        env:
+          NO_SKIP: true
+          SED: grep DOMAIN | grep -v "#" | grep -v DOMAIN-KEYWORD | sed 's/  - DOMAIN,//g' | sed 's/  - DOMAIN-SUFFIX,/+./g'
+        run: |
+          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Proxy/Proxy_Classical.yaml | ${{ env.SED }} >> proxy.txt
+          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml | ${{ env.SED }} >> china.txt
+          curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml | ${{ env.SED }} >> globalmedia.txt
+
+      # 仅支持将另类使用了 DOMAIN 或 DOMAIN-SUFFIX 的域名文件转换为behavior: domain format: text
+      - name: sed other classical rule
+        env:
+          NO_SKIP: true
+          SED: grep DOMAIN | grep -v "#" | sed 's/DOMAIN,//g' | sed 's/DOMAIN-SUFFIX,/+./g'
+        run: |
+          curl -sSL https://github.com/privacy-protection-tools/anti-AD/raw/master/anti-ad-surge.txt | ${{ env.SED }} >> anti-ad.txt
+
+      # 仅支持将 使用了通配符 * 的域名文件转换为behavior: domain format: text
+      - name: sed * rule
+        env:
+          NO_SKIP: true
+          SED: grep "*." | grep -v "#" | sed 's/\*\./\+\./g'
+        run: |
+          curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} >> oisd-small.txt
+          curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} >> 1host-lite.txt
 
       - name: Move files to publish directory
         run: |
-          mkdir -p clash
-          cp *.yaml ./clash/
+          mkdir -p clash-yaml
+          mkdir -p clash-text
+          cp *.yaml ./clash-yaml/
+          cp *.yaml ./clash-text/
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v2.0.0
@@ -61,11 +78,12 @@ jobs:
       - name: Release and upload assets
         uses: softprops/action-gh-release@v0.1.15
         with:
-          name: clash
+          name: clash_rule
           tag_name: clash_rule
           draft: false
           prerelease: false
           files: |
-            ./clash/*
+            ./clash-yaml/*
+            ./clash-text/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
