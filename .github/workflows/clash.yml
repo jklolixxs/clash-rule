@@ -2,7 +2,7 @@ name: rule files
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 22 * * *"
+    - cron: "0 23 * * *" # 北京时间早晨7点固定更新
   push:
     branches:
       - main
@@ -62,13 +62,6 @@ jobs:
         run: |
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} > ./clash-text/oisd-small.txt
           curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} > ./clash-text/1host-lite.txt
-
-      # - name: Move files to publish directory
-      #   run: |
-      #     mkdir -p clash-yaml
-      #     mkdir -p clash-text
-      #     cp *.yaml ./clash-yaml/
-      #     cp *.yaml ./clash-text/
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v2.0.0
