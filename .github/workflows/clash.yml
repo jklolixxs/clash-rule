@@ -76,8 +76,8 @@ jobs:
       #     name: clash-yaml
       #     path: ./clash-yaml/*
       
-      # - name: Checkout repo
-      #   uses: actions/checkout@v3.5.2
+      - name: Checkout repo
+        uses: actions/checkout@v3.5.2
       
       - name: Push files to repo
         run: |
