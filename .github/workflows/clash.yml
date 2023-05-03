@@ -85,6 +85,8 @@ jobs:
           cd /home/runner/work/clash-yaml
           git config --global init.defaultBranch release
           git init
+          git config --global user.name "jklolixxs"
+          git config --global user.email "bavlzgbq@telegmail.com"
           git add .
           git commit -m "Update YAML files"
           git push origin HEAD:/clash-rule/clash-yaml/
