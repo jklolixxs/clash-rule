@@ -49,7 +49,7 @@ jobs:
       - name: Move files to publish directory
         run: |
           mkdir -p clash
-          cp *.txt ./clash/
+          cp *.yaml ./clash/
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v2.0.0
