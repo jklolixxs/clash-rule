@@ -70,6 +70,38 @@ jobs:
           tag: clash_rule
           deleteOnlyFromDrafts: false
 
+      - name: Upload artifact yaml
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: clash-yaml
+          path: ./clash-yaml/*
+      
+      - name: Checkout repo
+        uses: actions/checkout@v3.5.2
+      
+      - name: Push files to repo
+        run: |
+          cd ./clash-yaml
+          git add .
+          git commit -m "Update YAML files"
+          git push
+
+      # - name: Upload artifact text
+      #   uses: actions/upload-artifact@v3.1.2
+      #   with:
+      #     name: clash-text
+      #     path: ./clash-text/*
+      
+      # - name: Checkout repo
+      #   uses: actions/checkout@v3.5.2
+      
+      # - name: Push files to repo
+      #   run: |
+      #     cd ./clash-text
+      #     git add .
+      #     git commit -m "Update TEXT files"
+      #     git push
+
       - name: Release and upload assets
         uses: softprops/action-gh-release@v0.1.15
         with:
