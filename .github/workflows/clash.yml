@@ -70,14 +70,14 @@ jobs:
       #     tag: clash_rule
       #     deleteOnlyFromDrafts: false
 
-      - name: Upload artifact yaml
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: clash-yaml
-          path: ./clash-yaml/*
+      # - name: Upload artifact yaml
+      #   uses: actions/upload-artifact@v3.1.2
+      #   with:
+      #     name: clash-yaml
+      #     path: ./clash-yaml/*
       
-      - name: Checkout repo
-        uses: actions/checkout@v3.5.2
+      # - name: Checkout repo
+      #   uses: actions/checkout@v3.5.2
       
       - name: Push files to repo
         run: |
