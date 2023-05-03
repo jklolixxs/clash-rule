@@ -64,48 +64,25 @@ jobs:
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} > /home/runner/work/clash-text/oisd-small.txt
           curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} > /home/runner/work/clash-text/1host-lite.txt
 
-      # - name: Delete current release assets
-      #   uses: andreaswilli/delete-release-assets-action@v2.0.0
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     tag: clash_rule
-      #     deleteOnlyFromDrafts: false
-
-      - name: Upload artifact yaml
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: clash-yaml
-          path: /home/runner/work/clash-yaml/*
-
-      - name: Checkout repo
-        uses: actions/checkout@v3.5.2
-      
-      - name: Push files to repo
-        run: |
-          cd /home/runner/work/clash-yaml
-          git config --global init.defaultBranch main
-          git init
-          git config --global user.name "jklolixxs"
-          git config --global user.email "bavlzgbq@telegmail.com"
-          git add -A
-          git commit -m "Update YAML files"
-          git push origin HEAD:/refs/heads/clash-rule/clash-yaml/
-
-      # - name: Upload artifact text
+      # - name: Upload artifact yaml
       #   uses: actions/upload-artifact@v3.1.2
       #   with:
-      #     name: clash-text
-      #     path: ./clash-text/*
-      
+      #     name: clash-yaml
+      #     path: /home/runner/work/clash-yaml/*
+
       # - name: Checkout repo
       #   uses: actions/checkout@v3.5.2
       
       # - name: Push files to repo
       #   run: |
-      #     cd ./clash-text
-      #     git add .
-      #     git commit -m "Update TEXT files"
-      #     git push
+      #     cd /home/runner/work/clash-yaml
+      #     git config --global init.defaultBranch main
+      #     git init
+      #     git config --global user.name "jklolixxs"
+      #     git config --global user.email "bavlzgbq@telegmail.com"
+      #     git add -A
+      #     git commit -m "Update YAML files"
+      #     git push origin HEAD:/refs/heads/clash-rule/clash-yaml/
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v2.0.0
