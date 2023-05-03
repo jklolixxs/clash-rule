@@ -82,6 +82,9 @@ jobs:
       
       - name: Push files to repo
         run: |
+          git init
+          git config --global user.name "jklolixxs"
+          git config --global user.email "jklolixxs@github.com"
           cd /home/runner/work/clash-yaml
           git add .
           git commit -m "Update YAML files"
