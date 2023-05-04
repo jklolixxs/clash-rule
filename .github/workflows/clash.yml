@@ -6,9 +6,11 @@ on:
   push:
     branches:
       - main
+      - release
     paths-ignore:
       - "**/README.md"
       - "**/clash-rule/**"
+      - "**/surge-rule/**"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -125,7 +127,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b release
-          git add .
+          git add -A
           git commit -m "${{ env.RELEASE_NAME }}"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f -u clash-rule release:/clash-rule/clash-yaml
@@ -137,7 +139,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b release
-          git add .
+          git add -A
           git commit -m "${{ env.RELEASE_NAME }}"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f -u clash-rule release:/clash-rule/clash-yaml
