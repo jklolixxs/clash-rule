@@ -94,25 +94,8 @@ jobs:
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} > /home/runner/work/surge-domain/oisd-small-surge.txt
           curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} > /home/runner/work/surge-domain/1host-lite-surge.txt
 
-      # - name: Upload artifact yaml
-      #   uses: actions/upload-artifact@v3.1.2
-      #   with:
-      #     name: clash-yaml
-      #     path: /home/runner/work/clash-yaml/*
-
       # - name: Checkout repo
       #   uses: actions/checkout@v3.5.2
-      
-      # - name: Push files to repo
-      #   run: |
-      #     cd /home/runner/work/clash-yaml
-      #     git config --global init.defaultBranch main
-      #     git init
-      #     git config --global user.name "jklolixxs"
-      #     git config --global user.email "bavlzgbq@telegmail.com"
-      #     git add -A
-      #     git commit -m "Update YAML files"
-      #     git push origin HEAD:/refs/heads/clash-rule/clash-yaml/
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v2.0.0
@@ -134,3 +117,39 @@ jobs:
             /home/runner/work/surge-domain/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Git push assets to "release" branch
+        run: |
+          cd /home/runner/work/clash-yaml || exit 1
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release
+          git add .
+          git commit -m "${{ env.RELEASE_NAME }}"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u origin release:/clash-rule/clash-yaml
+
+      - name: Git push assets to "release" branch
+        run: |
+          cd /home/runner/work/clash-text || exit 1
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release
+          git add .
+          git commit -m "${{ env.RELEASE_NAME }}"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u origin release:/clash-rule/clash-yaml
+
+      - name: Git push assets to "release" branch
+        run: |
+          cd /home/runner/work/surge-domain || exit 1
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release
+          git add .
+          git commit -m "${{ env.RELEASE_NAME }}"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u origin release:/surge-rule
