@@ -72,7 +72,7 @@ jobs:
           NO_SKIP: true
           SED: grep DOMAIN | grep -v "#" | grep -v DOMAIN-KEYWORD | sed 's/  - DOMAIN,//g' | sed 's/  - DOMAIN-SUFFIX,/./g'
         run: |
-          mkdir -p /home/runner/work/clash-text/
+          mkdir -p /home/runner/work/surge-domain/
           curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Proxy/Proxy_Classical.yaml | ${{ env.SED }} > /home/runner/work/surge-domain/proxy-surge.txt
           curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml | ${{ env.SED }} > /home/runner/work/surge-domain/china-surge.txt
           curl -sSL https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml | ${{ env.SED }} > /home/runner/work/surge-domain/globalmedia-surge.txt
