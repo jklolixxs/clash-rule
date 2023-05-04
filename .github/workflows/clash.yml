@@ -123,7 +123,7 @@ jobs:
       - name: Git push assets to "release" branch
         run: |
           mkdir -p ./upfile/ || exit 1
-          cd ./upfile || exit 1
+          cd ./upfile/ || exit 1
           cp  /home/runner/work/clash-yaml/* ./upfile
           git init
           git config --local user.name "github-actions[bot]"
@@ -137,7 +137,7 @@ jobs:
       - name: Git push assets to "release" branch
         run: |
           mkdir -p ./upfile/ || exit 1
-          cd ./upfile || exit 1
+          cd ./upfile/ || exit 1
           cp  /home/runner/work/clash-text/* ./upfile
           git init
           git config --local user.name "github-actions[bot]"
@@ -151,7 +151,7 @@ jobs:
       - name: Git push assets to "release" branch
         run: |
           mkdir -p ./upfile/ || exit 1
-          cd ./upfile || exit 1
+          cd ./upfile/ || exit 1
           cp  /home/runner/work/surge-domain/* ./upfile
           git init
           git config --local user.name "github-actions[bot]"
