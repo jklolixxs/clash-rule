@@ -97,14 +97,14 @@ jobs:
         uses: andreaswilli/delete-release-assets-action@v2.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: rule
+          tag: latest
           deleteOnlyFromDrafts: false
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v0.1.15
         with:
-          name: rule
-          tag_name: rule
+          name: latest
+          tag_name: latest
           draft: false
           prerelease: false
           files: |
