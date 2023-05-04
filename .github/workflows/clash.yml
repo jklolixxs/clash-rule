@@ -122,7 +122,8 @@ jobs:
 
       - name: Git push assets to "release" branch
         run: |
-          cd /home/runner/work/clash-yaml || exit 1
+          cd ./upfile || exit 1
+          cp  /home/runner/work/clash-yaml/* ./upfile
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -134,7 +135,8 @@ jobs:
 
       - name: Git push assets to "release" branch
         run: |
-          cd /home/runner/work/clash-text || exit 1
+          cd ./upfile || exit 1
+          cp  /home/runner/work/clash-text/* ./upfile
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -146,7 +148,8 @@ jobs:
 
       - name: Git push assets to "release" branch
         run: |
-          cd /home/runner/work/surge-domain || exit 1
+          cd ./upfile || exit 1
+          cp  /home/runner/work/surge-domain/* ./upfile
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
