@@ -128,7 +128,7 @@ jobs:
           git add .
           git commit -m "${{ env.RELEASE_NAME }}"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u origin release:/clash-rule/clash-yaml
+          git push -f -u clash-rule release:/clash-rule/clash-yaml
 
       - name: Git push assets to "release" branch
         run: |
@@ -140,7 +140,7 @@ jobs:
           git add .
           git commit -m "${{ env.RELEASE_NAME }}"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u origin release:/clash-rule/clash-yaml
+          git push -f -u clash-rule release:/clash-rule/clash-yaml
 
       - name: Git push assets to "release" branch
         run: |
