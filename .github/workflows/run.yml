@@ -33,14 +33,6 @@ jobs:
           curl -sSL https://github.com/sjhgvr/oisd/raw/main/domainswild_small.txt | ${{ env.SED }} > /home/runner/work/clash-yaml/oisd-small-clash.yaml
           curl -sSL https://github.com/badmojr/1Hosts/raw/master/Lite/wildcards.txt | ${{ env.SED }} > /home/runner/work/clash-yaml/1host-lite-clash.yaml
 
-      # 仅支持将未使用通配符的域名文件转换为behavior: domain
-      - name: sed . rule
-        env:
-          NO_SKIP: true
-          SED: grep .* | sed 's/^\./g' | sed 's/^/\+\./g' | sed "s/^/'/;s/$/'/" | sed 's/^/  - /g' | sed '1ipayload:'
-        run: |
-          curl -sSL https://raw.githubusercontent.com/Cats-Team/AdRules/main/allow-domains-list.txt | ${{ env.SED }} > /home/runner/work/clash-yaml/adrules-clash.yaml
-
       # 下面的规则是转换为 text 格式
 
       # 仅支持将 behavior: classical 转换为behavior: domain format: text
