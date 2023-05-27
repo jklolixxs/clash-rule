@@ -37,7 +37,7 @@ jobs:
       - name: sed . rule
         env:
           NO_SKIP: true
-          SED: grep "." | sed 's/^\./g' | sed 's/^/\+\./g' | sed "s/^/'/;s/$/'/" | sed 's/^/  - /g' | sed '1ipayload:'
+          SED: grep .* | sed 's/^\./g' | sed 's/^/\+\./g' | sed "s/^/'/;s/$/'/" | sed 's/^/  - /g' | sed '1ipayload:'
         run: |
           curl -sSL https://raw.githubusercontent.com/Cats-Team/AdRules/main/allow-domains-list.txt | ${{ env.SED }} > /home/runner/work/clash-yaml/adrules-clash.yaml
 
